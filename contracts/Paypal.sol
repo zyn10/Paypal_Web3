@@ -105,29 +105,44 @@ contract Paypal {
 
     //Get all Requests sent to user
 
-    function getMyRequests(address _user) public view returns(
-        address[] memory,
-        uint256 [] memory,
-        string [] memory,
-        string [] memory
-    ){
-        address [] memory addrs = new address [] (requests[_user].length);
-        uint256 [] memory amnt = new uint256 [] (requests[_user].length);
-        string [] memory msgs = new string [] (requests[_user].length);
-        string [] memory nam = new string [] (requests[_user].length);
-        
+    function getMyRequests(
+        address _user
+    )
+        public
+        view
+        returns (
+            address[] memory,
+            uint256[] memory,
+            string[] memory,
+            string[] memory
+        )
+    {
+        address[] memory addrs = new address[](requests[_user].length);
+        uint256[] memory amnt = new uint256[](requests[_user].length);
+        string[] memory msgs = new string[](requests[_user].length);
+        string[] memory nam = new string[](requests[_user].length);
 
-        for (uint i=0; i<requests[_user].length;i++){
-
+        for (uint i = 0; i < requests[_user].length; i++) {
             request storage myRequests = requests[_user][i];
-            addrs[i] =  myRequests.requestor;
+            addrs[i] = myRequests.requestor;
             amnt[i] = myRequests.amount;
             msgs[i] = myRequests.message;
             nam[i] = myRequests.name;
         }
-        return (addrs,amnt,msgs,nam); 
+        return (addrs, amnt, msgs, nam);
     }
 
+    //get all historic transactions users has been a part of
 
+    function getMyHistory(
+        address _user
+    ) public view returns (sendReceive[] memory) {
+        return history[_user];
+    }
 
+    //get all names
+
+    function getMyNames(address _user) public view returns (userName memory) {
+        return names[_user];
+    }
 }
